@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "499627515169",
+    "project_id": "outdoor-social",
+    "storage_bucket": "outdoor-social.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499627515169:android:51f47a23b19b4da1013260",
+        "android_client_info": {
+          "package_name": "com.example.outdoor_social"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoSg7piknvsvYOvlRJ2i95wkt19m9sRMY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

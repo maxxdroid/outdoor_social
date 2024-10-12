@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:outdoor_social/authentication/login.dart';
 import 'package:outdoor_social/consts/outdoor_consts.dart';
 
 class LandingPage extends StatefulWidget {
@@ -55,7 +57,6 @@ class _LandingPageState extends State<LandingPage> {
                         setState(() {
                           if (index < 2) {
                             index++;
-                            print("..................$index");
                           }
                         });
                       },
@@ -80,9 +81,8 @@ class _LandingPageState extends State<LandingPage> {
                         ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                if (index < 2) {
-                                  index++;
-                                  print("..................$index");
+                                if (index > 0) {
+                                  index--;
                                 }
                               });
                             },
@@ -104,12 +104,31 @@ class _LandingPageState extends State<LandingPage> {
                         const SizedBox(
                           width: 30,
                         ),
+                        index == 2 ?
+                        ElevatedButton(
+                            onPressed: () {
+                              Get.offAll(() => const Login());
+                            },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.black),
+                            child: const SizedBox(
+                              width: 100,
+                              height: 50,
+                              child: Center(
+                                child: Text(
+                                  "Get Started",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ),
+                            )) :
                         ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                if (index > 0) {
-                                  index--;
-                                  print("..................$index");
+                                if (index < 2) {
+                                  index++;
                                 }
                               });
                             },
