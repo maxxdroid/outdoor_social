@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:outdoor_social/tabs/user_home.dart';
+
+import '../tabs/home.dart';
 
 class MyBottomAppBar extends StatelessWidget {
   final int index;
@@ -11,6 +16,9 @@ class MyBottomAppBar extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Padding(padding: const EdgeInsets.all(10),
           child: Card(
+            color: Colors.white.withOpacity(.5),
+            shadowColor: Colors.black,
+            elevation: 5,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
             child: Padding(padding: const EdgeInsets.all(0),
                 child: SizedBox(
@@ -19,7 +27,10 @@ class MyBottomAppBar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                          onPressed:  () {},
+                          onPressed:  () {
+                            Get.to(()=> const Pages(),
+                                transition: Transition.fadeIn, duration: const Duration(milliseconds: 100));
+                          },
                           icon: ImageIcon(
                             const AssetImage("assets/images/comp.png"),
                             color: index == 0 ? Colors.blue : Colors.black,
@@ -33,7 +44,10 @@ class MyBottomAppBar extends StatelessWidget {
                       ),
                       const SizedBox(width: 20,),
                       IconButton(
-                          onPressed:  () {},
+                          onPressed:  () {
+                            Get.to(()=> const UserHome(),
+                                transition: Transition.fadeIn, duration: const Duration(milliseconds: 100));
+                          },
                           icon:  ImageIcon(
                             const AssetImage("assets/images/home.png"),
                             color: index == 2 ? Colors.blue : Colors.black,

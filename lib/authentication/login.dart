@@ -107,7 +107,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
 
                         Map<String, dynamic> userDetails = {
                           "username" : _usernameController.text.toString(),
@@ -122,11 +122,9 @@ class _LoginState extends State<Login> {
                             _isLoading = true;
                           });
 
-                          var result = AuthMethods().signIn(userDetails);
-                          print(result.toString());
+                          var result = await AuthMethods().signIn(userDetails);
 
-                          if(result.toString() == "failed") {
-                            print(result.toString());
+                          if(result == "failed") {
                             Get.snackbar("Sign In Error", "Try again later");
                             setState(() {
                               _isLoading = false;

@@ -54,23 +54,15 @@ class AuthMethods {
       User? firebaseUser = userCredential.user;
 
       if (firebaseUser != null) {
-        // LocalUser user = LocalUser(
-        //     name: userDetails["email"],
-        //     role: userDetails["role"],
-        //     userID: firebaseUser.uid,
-        //     email: userDetails["email"],
-        //     verified: false);
-        // await SaveLocally().saveUser(user);
-
         Get.to(()=> const Pages(),
             transition: Transition.cupertino, duration: const Duration(seconds: 1));
       }
+      return "success";
     } catch (error) {
       // errorHandling(error);
       return "failed";
     }
 
-    return "failed";
   }
 
   void errorHandling(dynamic error) {

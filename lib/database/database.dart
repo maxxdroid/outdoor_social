@@ -20,7 +20,7 @@ class Database{
     // Upload image to Firebase Storage
     final storageRef = FirebaseStorage.instance
         .ref()
-        .child('images/${DateTime.now().millisecondsSinceEpoch}');
+        .child('images/${DateTime.now().millisecondsSinceEpoch}.jpg');
     final uploadTask = storageRef.putFile(_image);
     final snapshot = await uploadTask.whenComplete(() {});
 
