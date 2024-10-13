@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:outdoor_social/authentication/follower.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'auth.dart';
 
@@ -17,6 +18,26 @@ class _AccountDetailsState extends State<AccountDetails> {
   final TextEditingController _biographyController = TextEditingController();
   final TextEditingController _statusController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ImagePicker _imagePicker = ImagePicker();
+
+  bool imageSelected = false;
+
+  late File _pic;
+  Future _selectFromGallery() async{
+    var tempImage = await _imagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _pic = File(tempImage!.path);
+      imageSelected = true;
+    });
+  }
+
+  Future _takeFromCamera() async{
+    var tempImage = await _imagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _pic = File(tempImage!.path);
+      imageSelected = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,135 +49,142 @@ class _AccountDetailsState extends State<AccountDetails> {
         title: const Text("Outdoor Social"),
         centerTitle: true,),
       backgroundColor: Colors.white,
-      body: Form(
-        key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 20,),
-              const Icon(Icons.add_a_photo, size: 120,),
-              const SizedBox(height: 20,),
-              Container(
-                margin: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 10),
-                // height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(.5),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0,vertical: 0 ),
-                  child: TextFormField(
-                    controller: _userNameController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      hintText: "Username",
-                      helperStyle: TextStyle(fontSize: 8),
-                      // labelStyle: TextStyle(fontSize: 13),
-                      border: InputBorder.none,
-
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Email cannot be empty';
-                      }
-                      return null;
-                    },
+      body: SingleChildScrollView(
+        child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 20,),
+                imageSelected == true ? CircleAvatar(
+                  radius: 60,
+                  backgroundImage: FileImage(_pic),
+                ):
+                IconButton(onPressed: () {
+                  _selectFromGallery();
+                }, icon: const Icon(Icons.add_a_photo, size: 120,)),
+                const SizedBox(height: 20,),
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 10),
+                  // height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(.5),
+                    borderRadius: BorderRadius.circular(50),
                   ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 10),
-                // height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(.5),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0,vertical: 0 ),
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      hintText: "Status",
-                      helperStyle: TextStyle(fontSize: 8),
-                      // labelStyle: TextStyle(fontSize: 13),
-                      border: InputBorder.none,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0,vertical: 0 ),
+                    child: TextFormField(
+                      controller: _userNameController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                        hintText: "Username",
+                        helperStyle: TextStyle(fontSize: 8),
+                        // labelStyle: TextStyle(fontSize: 13),
+                        border: InputBorder.none,
 
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Email cannot be empty';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 10),
-                // height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(.5),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0,vertical: 0 ),
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      hintText: "Biography",
-                      helperStyle: TextStyle(fontSize: 8),
-                      // labelStyle: TextStyle(fontSize: 13),
-                      border: InputBorder.none,
-
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Email cannot be empty';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20,),
-              ElevatedButton(
-                  onPressed: () {
-
-                    widget.userDetails["username"] = _userNameController.text.toString();
-                    widget.userDetails["status"] = _statusController.text.toString();
-                    widget.userDetails["biography_"] = _biographyController.text.toString();
-
-                    final FormState? form = _formKey.currentState;
-
-                    if(form!.validate()) {
-                      AuthMethods().signUp(widget.userDetails);
-                      // print(widget.userDetails);
-                    }
-
-                  },
-                  style:
-                  ElevatedButton.styleFrom(backgroundColor: Colors.black),
-                  child: SizedBox(
-                    width: width * .5,
-                    height: 50,
-                    child: const Center(
-                      child: Text(
-                        "Create Account",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w900),
                       ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Email cannot be empty';
+                        }
+                        return null;
+                      },
                     ),
-                  )),
-            ],
-          )
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 10),
+                  // height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(.5),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0,vertical: 0 ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                        hintText: "Status",
+                        helperStyle: TextStyle(fontSize: 8),
+                        // labelStyle: TextStyle(fontSize: 13),
+                        border: InputBorder.none,
+
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Email cannot be empty';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 10),
+                  // height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(.5),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0,vertical: 0 ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                        hintText: "Biography",
+                        helperStyle: TextStyle(fontSize: 8),
+                        // labelStyle: TextStyle(fontSize: 13),
+                        border: InputBorder.none,
+
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Email cannot be empty';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20,),
+                ElevatedButton(
+                    onPressed: () {
+
+                      widget.userDetails["username"] = _userNameController.text.toString();
+                      widget.userDetails["status"] = _statusController.text.toString();
+                      widget.userDetails["biography"] = _biographyController.text.toString();
+
+                      final FormState? form = _formKey.currentState;
+
+                      if(form!.validate() & _pic.path.isNotEmpty) {
+                        AuthMethods().signUp(widget.userDetails,  _pic);
+                      }
+
+                    },
+                    style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                    child: SizedBox(
+                      width: width * .5,
+                      height: 50,
+                      child: const Center(
+                        child: Text(
+                          "Create Account",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w900),
+                        ),
+                      ),
+                    )),
+              ],
+            )
+        ),
       ),
     );
   }

@@ -18,7 +18,7 @@ class PostWidget extends StatelessWidget {
                 children: [
                   Image.asset(user.imageUrl ?? "", height: 35,),
                   const SizedBox(width: 10,),
-                  Text(user.name, style: const TextStyle(fontWeight: FontWeight.bold),),
+                  Text(user.fullName, style: const TextStyle(fontWeight: FontWeight.bold),),
                   user.verified ? Image.asset("assets/images/verified.png", height: 15, fit: BoxFit.fitHeight,) : const SizedBox()
                 ],
               ),

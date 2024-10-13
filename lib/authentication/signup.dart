@@ -193,7 +193,7 @@ class _SignUpState extends State<SignUp> {
                         Map<String, dynamic> userDetails = {
                           "name" : _nameController.text.toString(),
                           "number" : _phoneController.text.toString(),
-                          "date of birth" : _dateController.text.toString(),
+                          "dob" : _dateController.text.toString(),
                           "password"  : _passwordController.text.toString()
                         };
 

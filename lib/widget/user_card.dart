@@ -22,7 +22,7 @@ class UserCard extends StatelessWidget {
               children: [
                 SizedBox(
                   width: width * .4,
-                  child: Text( user.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                  child: Text( user.fullName, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                 ),
                 SizedBox(
                   width: width * .45,

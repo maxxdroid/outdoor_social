@@ -1,8 +1,9 @@
 class LocalUser {
-  String name;
+  String fullName;
   String? email;
   String? imageUrl;
   String? biography;
+  String? username;
   String role;
   String userID;
   bool verified;
@@ -10,10 +11,11 @@ class LocalUser {
   String? status;
 
   LocalUser(
-      {required this.name,
+      {required this.fullName,
         required this.role,
         this.biography,
         this.imageUrl,
+        this.username,
         this.dob,
         this.status,
         required this.verified,
@@ -22,9 +24,10 @@ class LocalUser {
 
   factory LocalUser.fromJson(Map<String, dynamic> json) {
     return LocalUser(
-        name: json['name'],
+        fullName: json['fullName'],
         email: json['email'],
         verified: json['verified'],
+        username: json['user'],
         imageUrl: json['imageUrl'],
         dob: json['dob'],
         biography: json['biography'],
@@ -34,9 +37,10 @@ class LocalUser {
 
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
+      'fullName': fullName,
       'email': email,
       'role': role,
+      'username' : username,
       'biography': biography,
       'verified' : verified,
       'dob' : dob,
@@ -50,10 +54,11 @@ class LocalUser {
     if (identical(this, other)) return true;
 
     return other is LocalUser &&
-        other.name == name &&
+        other.fullName == fullName &&
         other.email == email &&
         other.imageUrl == imageUrl &&
         other.verified == verified &&
+        other.username == username &&
         other.role == role &&
         other.dob == dob &&
         other.biography == biography &&
@@ -62,11 +67,12 @@ class LocalUser {
 
   @override
   int get hashCode {
-    return name.hashCode ^
+    return fullName.hashCode ^
     email.hashCode ^
     imageUrl.hashCode ^
     role.hashCode ^
     dob.hashCode ^
+    username.hashCode ^
     verified.hashCode ^
     biography.hashCode ^
     userID.hashCode;
