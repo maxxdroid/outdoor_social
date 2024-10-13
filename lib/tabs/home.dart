@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:outdoor_social/tabs/user_profile.dart';
 import 'package:outdoor_social/widget/bottom_app_bar.dart';
 import 'package:outdoor_social/widget/home_card.dart';
+
+import '../local_storage/SharedPreferences.dart';
+import '../model/user.dart';
 
 class Pages extends StatefulWidget {
   const Pages({super.key});
@@ -10,13 +15,30 @@ class Pages extends StatefulWidget {
 }
 
 class _PagesState extends State<Pages> {
+
+  LocalUser user = LocalUser(fullName: "", role: "user", verified: false, userID: "", imageUrl: "assets/images/profile-img.jpeg");
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _getUser();
+    super.initState();
+  }
+
+  _getUser() async {
+    user = (await SaveLocally().getUser())!;
+    print("...${user.toJson()}");
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+        leading: IconButton(onPressed: () {
+          Get.to(() => UserProfile(user: user) );
+        }, icon: const Icon(Icons.menu)),
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

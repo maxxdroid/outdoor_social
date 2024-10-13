@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:outdoor_social/data/const_data.dart';
 import 'package:outdoor_social/local_storage/SharedPreferences.dart';
 import 'package:outdoor_social/model/user.dart';
+import 'package:outdoor_social/tabs/user_profile.dart';
 import 'package:outdoor_social/widget/bottom_app_bar.dart';
 import 'package:outdoor_social/widget/post_card.dart';
 import 'package:outdoor_social/widget/status_widget.dart';
@@ -35,7 +38,9 @@ class _UserHomeState extends State<UserHome> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+        leading: IconButton(onPressed: () {
+          Get.to(() => UserProfile(user: user) );
+        }, icon: const Icon(Icons.menu)),
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
