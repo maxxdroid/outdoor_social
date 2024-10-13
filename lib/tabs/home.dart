@@ -18,12 +18,17 @@ class _PagesState extends State<Pages> {
       appBar: AppBar(
         leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
         title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Outdoor Social", style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold)),
+            ImageIcon(
+              AssetImage("assets/images/bg_no_color.png"),color: Colors.blue,
+              size: 130,
+            ),
             ImageIcon(
               AssetImage("assets/images/sunny.png"),
               color: Colors.amberAccent,
-            )
+            ),
+            SizedBox(width: 20,)
           ],
         ),
         backgroundColor: Colors.white,

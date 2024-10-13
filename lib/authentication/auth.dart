@@ -34,22 +34,21 @@ class AuthMethods {
             biography: userDetails["biography"],
             verified: false);
 
-        print("........${user.toJson()}");
-
         await Database().saveUserInfoTo(user.toJson());
         await SaveLocally().saveUser(user);
         Get.to(()=> const Pages(),
             transition: Transition.cupertino, duration: const Duration(seconds: 1));
       }
     } catch (error) {
-      // errorHandling(error);
+      errorHandling(error);
+      Get.snackbar('Error', 'Try again later an error occurred');
     }
   }
 
-  signIn (Map<String, dynamic> userDetails) async {
+  Future<String> signIn (Map<String, dynamic> userDetails) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
-        email: "${userDetails["email"]}@gmail.com",
+        email: "${userDetails["username"]}@gmail.com",
         password: userDetails["password"],
       );
       User? firebaseUser = userCredential.user;
@@ -68,7 +67,10 @@ class AuthMethods {
       }
     } catch (error) {
       // errorHandling(error);
+      return "failed";
     }
+
+    return "failed";
   }
 
   void errorHandling(dynamic error) {
