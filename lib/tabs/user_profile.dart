@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:outdoor_social/authentication/auth.dart';
 import 'package:outdoor_social/model/user.dart';
 
 class UserProfile extends StatefulWidget {
@@ -17,6 +18,7 @@ class _UserProfileState extends State<UserProfile> {
     return Scaffold(
       body: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: const Text("Profile", style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),),
           centerTitle: true,
           backgroundColor: Colors.white,
@@ -24,7 +26,7 @@ class _UserProfileState extends State<UserProfile> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -77,16 +79,16 @@ class _UserProfileState extends State<UserProfile> {
                 const SizedBox(height: 10,),
                 Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  color: Colors.grey.withOpacity(.2),
+                  color: Colors.grey,
                   shadowColor: Colors.black45,
                   elevation: 2,
                   child: Container(
-                    padding: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(10),
                     width: width,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Name"),
+                        const Text("Name", style: TextStyle(fontWeight: FontWeight.bold),),
                         Text(widget.user.fullName)
                       ],
                     ),
@@ -95,16 +97,16 @@ class _UserProfileState extends State<UserProfile> {
                 const SizedBox(height: 10,),
                 Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  color: Colors.grey.withOpacity(.2),
+                  color: Colors.grey,
                   shadowColor: Colors.black45,
                   elevation: 2,
                   child: Container(
-                    padding: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(10),
                     width: width,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("DOB"),
+                        const Text("DOB", style: TextStyle(fontWeight: FontWeight.bold),),
                         Text(widget.user.dob ?? "")
                       ],
                     ),
@@ -113,16 +115,16 @@ class _UserProfileState extends State<UserProfile> {
                 const SizedBox(height: 10,),
                 Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  color: Colors.grey.withOpacity(.2),
+                  color: Colors.grey,
                   shadowColor: Colors.black45,
                   elevation: 2,
                   child: Container(
-                    padding: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(10),
                     width: width,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Username"),
+                        const Text("Username", style: TextStyle(fontWeight: FontWeight.bold),),
                         Text(widget.user.username ?? "")
                       ],
                     ),
@@ -131,16 +133,16 @@ class _UserProfileState extends State<UserProfile> {
                 const SizedBox(height: 10,),
                 Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  color: Colors.grey.withOpacity(.2),
+                  color: Colors.grey,
                   shadowColor: Colors.black45,
                   elevation: 2,
                   child: Container(
-                    padding: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(10),
                     width: width,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Bio"),
+                        const Text("Bio", style: TextStyle(fontWeight: FontWeight.bold),),
                         Text(widget.user.biography ?? "")
                       ],
                     ),
@@ -149,6 +151,7 @@ class _UserProfileState extends State<UserProfile> {
                 const SizedBox(height: 10,),
                 ElevatedButton(
                     onPressed: () {
+                      AuthMethods().logOut();
                     },
                     style:
                     ElevatedButton.styleFrom(backgroundColor: Colors.blue),
