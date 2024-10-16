@@ -39,7 +39,7 @@ class AuthMethods {
 
         await Database().saveUserInfoTo(user.toJson());
         await SaveLocally().saveUser(user);
-        Get.to(()=> const Pages(),
+        Get.to(()=> Pages(user: user),
             transition: Transition.cupertino, duration: const Duration(seconds: 1));
       }
     } catch (error) {
@@ -68,7 +68,7 @@ class AuthMethods {
           Map<String, dynamic> userInfoMap = userDoc.data() as Map<String, dynamic>;
           LocalUser loggedUser = LocalUser.fromJson(userInfoMap);
           await SaveLocally().saveUser(loggedUser);
-          Get.to(()=> const Pages(),
+          Get.to(()=> Pages(user: loggedUser,),
               transition: Transition.cupertino, duration: const Duration(seconds: 1));
           return "success";
         }

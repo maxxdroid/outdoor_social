@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:outdoor_social/data/const_data.dart';
-import 'package:outdoor_social/local_storage/SharedPreferences.dart';
 import 'package:outdoor_social/model/user.dart';
 import 'package:outdoor_social/tabs/user_profile.dart';
 import 'package:outdoor_social/widget/bottom_app_bar.dart';
@@ -19,20 +17,6 @@ class UserHome extends StatefulWidget {
 
 class _UserHomeState extends State<UserHome> {
 
-  LocalUser user = LocalUser(fullName: "", role: "user", verified: false, userID: "", imageUrl: "assets/images/profile-img.jpeg");
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    _getUser();
-    super.initState();
-  }
-
-  _getUser() async {
-    user = (await SaveLocally().getUser())!;
-    print("...${user.toJson()}");
-  }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -40,7 +24,7 @@ class _UserHomeState extends State<UserHome> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: () {
-          Get.to(() => UserProfile(user: user) );
+          Get.to(() => UserProfile(user: widget.user) );
         }, icon: const Icon(Icons.menu)),
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -78,7 +62,7 @@ class _UserHomeState extends State<UserHome> {
                             children: [
                               CircleAvatar(
                                 radius: 20,
-                                child: Image.asset( "assets/images/profile-img.jpeg"),
+                                child: Image.network(widget.user.imageUrl),
                               ),
                               const Text("Add")
                             ],
@@ -142,7 +126,7 @@ class _UserHomeState extends State<UserHome> {
               )
             ],
           ),
-          MyBottomAppBar(width: width, index: 2, user: user,)
+          MyBottomAppBar(width: width, index: 2, user: widget.user,)
         ],
       ),
     );

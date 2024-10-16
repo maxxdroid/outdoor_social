@@ -30,7 +30,7 @@ class MyBottomAppBar extends StatelessWidget {
                     children: [
                       IconButton(
                           onPressed:  () {
-                            Get.to(()=> const Pages(),
+                            Get.to(()=> Pages(user: user,),
                                 transition: Transition.fadeIn, duration: const Duration(milliseconds: 100));
                           },
                           icon: ImageIcon(

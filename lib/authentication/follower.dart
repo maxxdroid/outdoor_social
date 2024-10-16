@@ -44,9 +44,9 @@ class _FollowPageState extends State<FollowPage> {
               padding: const EdgeInsets.only(bottom: 20),
               child: ElevatedButton(
                   onPressed: () {
-                    Get.to(const Pages(),
-                        transition: Transition.cupertino,
-                        duration: const Duration(seconds: 1));
+                    // Get.to(const Pages(),
+                    //     transition: Transition.cupertino,
+                    //     duration: const Duration(seconds: 1));
                   },
                   style:
                   ElevatedButton.styleFrom(backgroundColor: Colors.blue),

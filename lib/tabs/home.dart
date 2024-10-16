@@ -8,7 +8,8 @@ import '../local_storage/SharedPreferences.dart';
 import '../model/user.dart';
 
 class Pages extends StatefulWidget {
-  const Pages({super.key});
+  final LocalUser user;
+  const Pages({super.key, required this.user});
 
   @override
   State<Pages> createState() => _PagesState();
@@ -16,19 +17,6 @@ class Pages extends StatefulWidget {
 
 class _PagesState extends State<Pages> {
 
-  LocalUser user = LocalUser(fullName: "", role: "user", verified: false, userID: "", imageUrl: "assets/images/profile-img.jpeg");
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    _getUser();
-    super.initState();
-  }
-
-  _getUser() async {
-    user = (await SaveLocally().getUser())!;
-    print("...${user.toJson()}");
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +25,7 @@ class _PagesState extends State<Pages> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: () {
-          Get.to(() => UserProfile(user: user) );
+          Get.to(() => UserProfile(user: widget.user) );
         }, icon: const Icon(Icons.menu)),
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -107,7 +95,7 @@ class _PagesState extends State<Pages> {
               ),
             ],
           ),
-          MyBottomAppBar(width: width, index: 0, user: user,)
+          MyBottomAppBar(width: width, index: 0, user: widget.user,)
         ],
       ),
     );

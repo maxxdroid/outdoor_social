@@ -1,7 +1,7 @@
 class LocalUser {
   String fullName;
   String? email;
-  String? imageUrl;
+  String imageUrl;
   String? biography;
   String? username;
   String role;
@@ -15,7 +15,7 @@ class LocalUser {
       {required this.fullName,
         required this.role,
         this.biography,
-        this.imageUrl,
+        required this.imageUrl,
         this.username,
         this.dob,
         this.phoneNumber,
