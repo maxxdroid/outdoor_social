@@ -75,20 +75,20 @@ class _PagesState extends State<Pages> {
               ),
               SizedBox(
                 height: height * .81,
-                child: const SingleChildScrollView(
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      SizedBox(height: 10,),
-                      HomeCard(title: "Motivations", image: "assets/images/motivations.png", unread: "345"),
-                      SizedBox(height: 10,),
-                      HomeCard(title: "Education", image: "assets/images/education.png", unread: "25"),
-                      SizedBox(height: 10,),
-                      HomeCard(title: "Comedy", image: "assets/images/comedy.png", unread: "768"),
-                      SizedBox(height: 10,),
-                      HomeCard(title: "Trends", image: "assets/images/trends.png", unread: "900"),
-                      SizedBox(height: 10,),
-                      HomeCard(title: "Sports", image: "assets/images/sports.png", unread: "123k"),
-                      SizedBox(height: 50,)
+                      const SizedBox(height: 10,),
+                      HomeCard(title: "Motivations", image: "assets/images/motivations.png", unread: "345", user: widget.user,),
+                      const SizedBox(height: 10,),
+                      HomeCard(title: "Education", image: "assets/images/education.png", unread: "25", user: widget.user),
+                      const SizedBox(height: 10,),
+                      HomeCard(title: "Comedy", image: "assets/images/comedy.png", unread: "768", user: widget.user),
+                      const SizedBox(height: 10,),
+                      HomeCard(title: "Trends", image: "assets/images/trends.png", unread: "900", user: widget.user),
+                      const SizedBox(height: 10,),
+                      HomeCard(title: "Sports", image: "assets/images/sports.png", unread: "123k", user: widget.user),
+                      const SizedBox(height: 50,)
                     ],
                   ),
                 ),

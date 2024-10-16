@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:outdoor_social/model/user.dart';
 
 import '../tabs/details.dart';
 
@@ -7,7 +8,8 @@ class HomeCard extends StatelessWidget {
   final String image;
   final String title;
   final String unread;
-  const HomeCard({super.key, required this.title, required this.image, required this.unread});
+  final LocalUser user;
+  const HomeCard({super.key, required this.title, required this.image, required this.unread, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class HomeCard extends StatelessWidget {
         ),
       ),
       onTap: () {
-        Get.to(Details(title: title),
+        Get.to(() => Details(title: title, user: user,),
             transition: Transition.cupertino,
             duration: const Duration(seconds: 1));
       },

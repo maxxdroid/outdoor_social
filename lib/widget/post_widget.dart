@@ -1,31 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:outdoor_social/model/user.dart';
 
+import '../model/post.dart';
+
 class PostWidget extends StatelessWidget {
-  final LocalUser user;
-  const PostWidget({super.key, required this.user});
+  final Post post;
+  const PostWidget({super.key, required this.post});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 20, bottom: 5, left: 20, right: 20),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
-                  Image.asset(user.imageUrl ?? "", height: 35,),
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Colors.transparent, // Optional: Set background color if needed
+                    child: ClipOval(
+                      child: Image.network(
+                        post.user.imageUrl,
+                        fit: BoxFit.cover,
+                        width: 35, // Width should be twice the radius
+                        height: 35, // Height should be twice the radius
+                      ),
+                    ),
+                  ),
                   const SizedBox(width: 10,),
-                  Text(user.fullName, style: const TextStyle(fontWeight: FontWeight.bold),),
-                  user.verified ? Image.asset("assets/images/verified.png", height: 15, fit: BoxFit.fitHeight,) : const SizedBox()
+                  Text(post.user.fullName, style: const TextStyle(fontWeight: FontWeight.bold),),
+                  post.user.verified ? Image.asset("assets/images/verified.png", height: 15, fit: BoxFit.fitHeight,) : const SizedBox()
                 ],
               ),
-              const Text("Today 5:30")
+              const Text("Date")
             ],),
           //
-          const Text("Same tins ro do some lorem ipsum stuff wic are lorious, Same tins ro do some lorem ipsum stuff wic are lorious, Same tins ro do some lorem ipsum stuff wic are lorious"),
+          Text(post.content),
           //
           const SizedBox(
             height: 5,
@@ -61,7 +75,8 @@ class PostWidget extends StatelessWidget {
                 ],
               ),
             ],
-          )
+          ),
+          const Divider(),
         ],
       ),
     );

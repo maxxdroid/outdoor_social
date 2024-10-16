@@ -1,17 +1,47 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:outdoor_social/database/database.dart';
+import 'package:outdoor_social/model/post.dart';
 import 'package:outdoor_social/widget/post_widget.dart';
 
 import '../data/const_data.dart';
+import '../model/user.dart';
 
 class Details extends StatefulWidget {
   final String title;
-  const Details({super.key, required this.title});
+  final LocalUser user;
+  const Details({super.key, required this.title, required this.user});
 
   @override
   State<Details> createState() => _DetailsState();
 }
 
 class _DetailsState extends State<Details> {
+  final TextEditingController _postController = TextEditingController();
+
+  StreamBuilder<QuerySnapshot<Map<String, dynamic>>> getPosts() {
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance.collection("posts").where("category", isEqualTo: widget.title).snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+                padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
+                shrinkWrap: true,
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  Post post = Post.fromJson(snapshot.data!.docs[index].data());
+                  return PostWidget(post: post);
+                });
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return const SizedBox();
+          }
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -69,21 +99,7 @@ class _DetailsState extends State<Details> {
                 SizedBox(
                   height: height * .74,
                   child:  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        PostWidget(user: user1,),
-                        const Divider(),
-                        PostWidget(user: user2,),
-                        const Divider(),
-                        PostWidget(user: user1,),
-                        const Divider(),
-                        PostWidget(user: user3,),
-                        const Divider(),
-                        PostWidget(user: user2),
-                        const Divider(),
-                        PostWidget(user: user3),
-                      ],
-                    ),
+                    child: getPosts(),
                   ),
                 ),
                 SizedBox(
@@ -105,6 +121,7 @@ class _DetailsState extends State<Details> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20.0,vertical: 3 ),
                           child: TextFormField(
+                            controller: _postController,
                             keyboardType: TextInputType.emailAddress,
                             maxLines: 3,
                             decoration: const InputDecoration(
@@ -115,7 +132,19 @@ class _DetailsState extends State<Details> {
                         ),
                       ),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if(_postController.text.isNotEmpty) {
+                              Post post = Post(
+                                  user: widget.user,
+                                  content: _postController.text.toString(),
+                                  category: widget.title
+                              );
+
+                              Database().makePost(post);
+
+                              _postController.clear();
+                            }
+                          },
                           // padding: EdgeInsets.zero,
                           icon: const Icon(Icons.send)
                       )
@@ -124,50 +153,6 @@ class _DetailsState extends State<Details> {
                 )
               ],
             ),
-            // Positioned(
-            //     bottom: 0,
-            //     child:SizedBox(
-            //       width: width,
-            //       child: Row(
-            //         crossAxisAlignment: CrossAxisAlignment.end,
-            //         children: [
-            //           Container(
-            //             width: width * .8,
-            //             height: 40,
-            //             margin: const EdgeInsets.symmetric(
-            //                 horizontal: 10.0, vertical: 10),
-            //             // height: 50,
-            //             decoration: BoxDecoration(
-            //               color: Colors.grey.withOpacity(.5),
-            //               borderRadius: BorderRadius.circular(50),
-            //             ),
-            //             child: Padding(
-            //               padding: const EdgeInsets.symmetric(
-            //                   horizontal: 20.0,vertical: 10 ),
-            //               child: TextFormField(
-            //                 keyboardType: TextInputType.emailAddress,
-            //                 decoration: const InputDecoration(
-            //                   hintText: "Type Something ...",
-            //                   // helperStyle: TextStyle(fontSize: 8),
-            //                   border: InputBorder.none,
-            //                   // prefixIcon: Padding(
-            //                   //   padding: EdgeInsets.only(right: 10),
-            //                   //   child:
-            //                   //   Icon(Icons.search, color: Colors.black),
-            //                   // ),
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //           IconButton(
-            //               onPressed: () {},
-            //               // padding: EdgeInsets.zero,
-            //               icon: Icon(Icons.send)
-            //           )
-            //         ],
-            //       ),
-            //     )
-            // )
           ],
         ),
       ),

@@ -16,12 +16,12 @@ class Database{
 
   comment() {}
 
-  Future<String> uploadImage(File _image) async{
+  Future<String> uploadImage(File image) async{
     // Upload image to Firebase Storage
     final storageRef = FirebaseStorage.instance
         .ref()
         .child('images/${DateTime.now().millisecondsSinceEpoch}.jpg');
-    final uploadTask = storageRef.putFile(_image);
+    final uploadTask = storageRef.putFile(image);
     final snapshot = await uploadTask.whenComplete(() {});
 
     // Get the download URL
