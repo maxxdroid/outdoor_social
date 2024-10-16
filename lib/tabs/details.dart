@@ -98,9 +98,7 @@ class _DetailsState extends State<Details> {
                 ),
                 SizedBox(
                   height: height * .74,
-                  child:  SingleChildScrollView(
-                    child: getPosts(),
-                  ),
+                  child: getPosts(),
                 ),
                 SizedBox(
                   width: width,

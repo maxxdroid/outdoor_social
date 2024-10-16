@@ -21,6 +21,7 @@ class _UserProfileState extends State<UserProfile> {
           centerTitle: true,
           backgroundColor: Colors.white,
         ),
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -145,6 +146,25 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10,),
+                ElevatedButton(
+                    onPressed: () {
+                    },
+                    style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                    child: SizedBox(
+                      width: width * .13,
+                      // height: 50,
+                      child: const Center(
+                        child: Text(
+                          "Log Out",
+                          style: TextStyle(
+                              color: Colors.white,
+                              // fontSize: 18,
+                              fontWeight: FontWeight.w900),
+                        ),
+                      ),
+                    )),
               ],
             ),
           ),

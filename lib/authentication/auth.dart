@@ -8,6 +8,7 @@ import 'package:outdoor_social/local_storage/SharedPreferences.dart';
 import 'package:outdoor_social/tabs/home.dart';
 
 import '../model/user.dart';
+import 'login.dart';
 
 class AuthMethods {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -79,6 +80,11 @@ class AuthMethods {
       return "failed";
     }
 
+  }
+
+  logOut() {
+    auth.signOut();
+    Get.offAll(() => const Login());
   }
 
   void errorHandling(dynamic error) {
