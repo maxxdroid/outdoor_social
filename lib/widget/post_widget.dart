@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:outdoor_social/model/user.dart';
 
 import '../model/post.dart';
@@ -9,8 +10,10 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String formattedDate = _formatDate(post.date);
+
     return Container(
-      padding: const EdgeInsets.only(top: 20, bottom: 5, left: 20, right: 20),
+      padding: const EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,14 +39,14 @@ class PostWidget extends StatelessWidget {
                   post.user.verified ? Image.asset("assets/images/verified.png", height: 15, fit: BoxFit.fitHeight,) : const SizedBox()
                 ],
               ),
-              const Text("Date")
+              Text(formattedDate)
             ],),
           //
           Text(post.content),
           //
-          const SizedBox(
-            height: 5,
-          ),
+          // const SizedBox(
+          //   height: 5,
+          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -80,5 +83,23 @@ class PostWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  // Helper function to format the date
+  String _formatDate(DateTime date) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = today.subtract(const Duration(days: 1));
+
+    if (date.isAfter(today)) {
+      // If the date is today, return "Today 5:30"
+      return "Today ${DateFormat('h:mm a').format(date)}";
+    } else if (date.isAfter(yesterday)) {
+      // If the date is yesterday, return "Yesterday"
+      return "Yesterday";
+    } else {
+      // For other dates, return "MMM d, yyyy"
+      return DateFormat('MMM d, yyyy').format(date);
+    }
   }
 }
