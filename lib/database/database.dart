@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:outdoor_social/model/post.dart';
 
 class Database{
 
@@ -9,8 +10,8 @@ class Database{
     FirebaseFirestore.instance.collection("users").doc(userDetails["userID"]).set(userDetails);
   }
 
-  makePost(Map<String, dynamic> postDetails) {
-    FirebaseFirestore.instance.collection("users").doc(postDetails["userID"]).set(postDetails);
+  makePost(Post post) {
+    FirebaseFirestore.instance.collection("posts").doc(post.postId).set(post.toJson());
   }
 
   comment() {}
