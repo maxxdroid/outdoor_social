@@ -9,6 +9,7 @@ class LocalUser {
   bool verified;
   String? dob;
   String? status;
+  String? phoneNumber;
 
   LocalUser(
       {required this.fullName,
@@ -17,6 +18,7 @@ class LocalUser {
         this.imageUrl,
         this.username,
         this.dob,
+        this.phoneNumber,
         this.status,
         required this.verified,
         required this.userID,
@@ -27,8 +29,10 @@ class LocalUser {
         fullName: json['fullName'],
         email: json['email'],
         verified: json['verified'],
-        username: json['user'],
+        username: json['username'],
         imageUrl: json['imageUrl'],
+        phoneNumber: json['phoneNumber'],
+        status: json['status'],
         dob: json['dob'],
         biography: json['biography'],
         userID: json['userID'],
@@ -42,6 +46,8 @@ class LocalUser {
       'role': role,
       'username' : username,
       'biography': biography,
+      'phoneNumber' : phoneNumber,
+      'status' : status,
       'verified' : verified,
       'dob' : dob,
       'imageUrl': imageUrl,
@@ -59,6 +65,8 @@ class LocalUser {
         other.imageUrl == imageUrl &&
         other.verified == verified &&
         other.username == username &&
+        other.status == status &&
+        other.phoneNumber == phoneNumber &&
         other.role == role &&
         other.dob == dob &&
         other.biography == biography &&
@@ -72,6 +80,8 @@ class LocalUser {
     imageUrl.hashCode ^
     role.hashCode ^
     dob.hashCode ^
+    status.hashCode ^
+    phoneNumber.hashCode ^
     username.hashCode ^
     verified.hashCode ^
     biography.hashCode ^

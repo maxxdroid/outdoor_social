@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:outdoor_social/authentication/login.dart';
 import 'package:outdoor_social/consts/outdoor_consts.dart';
@@ -16,6 +17,12 @@ class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
     super.initState();
+    //Locking the screen to only Portrait
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    // checkAuthStatus();
   }
 
   @override

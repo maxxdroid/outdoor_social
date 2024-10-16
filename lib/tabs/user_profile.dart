@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:outdoor_social/data/const_data.dart';
 import 'package:outdoor_social/model/user.dart';
-
-import '../local_storage/SharedPreferences.dart';
 
 class UserProfile extends StatefulWidget {
   final LocalUser user;

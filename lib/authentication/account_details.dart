@@ -117,20 +117,14 @@ class _AccountDetailsState extends State<AccountDetails> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20.0,vertical: 0 ),
                         child: TextFormField(
+                          controller: _statusController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: const InputDecoration(
                             hintText: "Status",
                             helperStyle: TextStyle(fontSize: 8),
                             // labelStyle: TextStyle(fontSize: 13),
                             border: InputBorder.none,
-
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Email cannot be empty';
-                            }
-                            return null;
-                          },
                         ),
                       ),
                     ),
@@ -146,6 +140,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20.0,vertical: 0 ),
                         child: TextFormField(
+                          controller: _biographyController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: const InputDecoration(
                             hintText: "Biography",
@@ -156,7 +151,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Email cannot be empty';
+                              return 'Enter a biography';
                             }
                             return null;
                           },

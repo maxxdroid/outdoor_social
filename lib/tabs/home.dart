@@ -107,7 +107,7 @@ class _PagesState extends State<Pages> {
               ),
             ],
           ),
-          MyBottomAppBar(width: width, index: 0,)
+          MyBottomAppBar(width: width, index: 0, user: user,)
         ],
       ),
     );

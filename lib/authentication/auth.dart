@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:outdoor_social/database/database.dart';
@@ -24,9 +25,10 @@ class AuthMethods {
 
 
         LocalUser user = LocalUser(
-            fullName: userDetails["username"],
+            fullName: userDetails["fullName"],
             role: "user",
             userID: firebaseUser.uid,
+            phoneNumber: userDetails["phoneNumber"],
             imageUrl: userDetails["imageUrl"],
             status: userDetails["status"],
             dob: userDetails["dob"],
@@ -34,13 +36,15 @@ class AuthMethods {
             biography: userDetails["biography"],
             verified: false);
 
+
         await Database().saveUserInfoTo(user.toJson());
         await SaveLocally().saveUser(user);
         Get.to(()=> const Pages(),
             transition: Transition.cupertino, duration: const Duration(seconds: 1));
       }
     } catch (error) {
-      errorHandling(error);
+      // errorHandling(error);
+      print(error);
       Get.snackbar('Error', 'Try again later an error occurred');
     }
   }
@@ -54,10 +58,22 @@ class AuthMethods {
       User? firebaseUser = userCredential.user;
 
       if (firebaseUser != null) {
-        Get.to(()=> const Pages(),
-            transition: Transition.cupertino, duration: const Duration(seconds: 1));
+
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(firebaseUser.uid)
+            .get();
+
+        if(userDoc.exists) {
+          Map<String, dynamic> userInfoMap = userDoc.data() as Map<String, dynamic>;
+          LocalUser loggedUser = LocalUser.fromJson(userInfoMap);
+          await SaveLocally().saveUser(loggedUser);
+          Get.to(()=> const Pages(),
+              transition: Transition.cupertino, duration: const Duration(seconds: 1));
+          return "success";
+        }
       }
-      return "success";
+      return "failed";
     } catch (error) {
       // errorHandling(error);
       return "failed";

@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:outdoor_social/tabs/user_home.dart';
 
+import '../model/user.dart';
 import '../tabs/home.dart';
 
 class MyBottomAppBar extends StatelessWidget {
   final int index;
   final double width;
-  const MyBottomAppBar({super.key, required this.width, required this.index});
+  final LocalUser user;
+  const MyBottomAppBar({super.key, required this.width, required this.index, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class MyBottomAppBar extends StatelessWidget {
                       const SizedBox(width: 20,),
                       IconButton(
                           onPressed:  () {
-                            Get.to(()=> const UserHome(),
+                            Get.to(()=> UserHome(user: user,),
                                 transition: Transition.fadeIn, duration: const Duration(milliseconds: 100));
                           },
                           icon:  ImageIcon(

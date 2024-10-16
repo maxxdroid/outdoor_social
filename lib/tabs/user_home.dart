@@ -10,7 +10,8 @@ import 'package:outdoor_social/widget/post_card.dart';
 import 'package:outdoor_social/widget/status_widget.dart';
 
 class UserHome extends StatefulWidget {
-  const UserHome({super.key});
+  final LocalUser user;
+  const UserHome({super.key, required this.user});
 
   @override
   State<UserHome> createState() => _UserHomeState();
@@ -141,7 +142,7 @@ class _UserHomeState extends State<UserHome> {
               )
             ],
           ),
-          MyBottomAppBar(width: width, index: 2)
+          MyBottomAppBar(width: width, index: 2, user: user,)
         ],
       ),
     );
