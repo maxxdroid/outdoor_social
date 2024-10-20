@@ -55,6 +55,9 @@ class _LoadingPageState extends State<LoadingPage> {
             duration: const Duration(seconds: 1));
       } else {
         // Handle the case where user is null (optional: add an error page or fallback)
+        Get.offAll(() => const Login(),
+            transition: Transition.cupertino,
+            duration: const Duration(seconds: 1));
         Get.snackbar('Error', 'Failed to load user information.');
       }
     });

@@ -4,7 +4,6 @@ import 'package:outdoor_social/tabs/user_profile.dart';
 import 'package:outdoor_social/widget/bottom_app_bar.dart';
 import 'package:outdoor_social/widget/home_card.dart';
 
-import '../local_storage/SharedPreferences.dart';
 import '../model/user.dart';
 
 class Pages extends StatefulWidget {

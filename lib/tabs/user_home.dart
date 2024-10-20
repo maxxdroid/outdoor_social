@@ -42,6 +42,18 @@ class _UserHomeState extends State<UserHome> {
         ),
         backgroundColor: Colors.white,
       ),
+      floatingActionButton: Container(
+        height: 100,
+        width: 50,
+        padding: const EdgeInsets.only(bottom: 50),
+        child: FloatingActionButton(
+          onPressed: (){
+            _showCreatePostModal(context);
+          },
+          backgroundColor: Colors.white,
+          child: const Icon(Icons.add, color: Colors.blue,),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: Stack(
         children: [
@@ -129,6 +141,54 @@ class _UserHomeState extends State<UserHome> {
           MyBottomAppBar(width: width, index: 2, user: widget.user,)
         ],
       ),
+    );
+  }
+
+  void _showCreatePostModal(BuildContext context) {
+    showModalBottomSheet(
+      useSafeArea: true,
+        isScrollControlled: true,
+        context: context,
+        backgroundColor: Colors.white,
+        builder: (BuildContext context) {
+          return Container(
+            height: 600,
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: Form(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Text(""),
+                  TextFormField(
+                    maxLines: 4,
+                    decoration: const InputDecoration(
+                      hintText: "Write Something",
+                      border: InputBorder.none,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            IconButton(onPressed: () {}, icon: const Icon(Icons.camera, size: 30,)),
+                            IconButton(onPressed: () {}, icon: const Icon(Icons.image, size: 30,)),
+                          ],
+                        ),
+                        ElevatedButton(
+                            onPressed: (){},
+                            child: const Text("Post")
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        }
     );
   }
 }
